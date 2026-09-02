@@ -38,7 +38,7 @@ loginForm.addEventListener(
 
             const response =
                 await fetch(
-                    "http://localhost:8080/api/appointments",
+                    "https://aura-salon-production.up.railway.app/api/appointments",
                     {
                         method: "GET",
 

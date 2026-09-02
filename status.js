@@ -39,7 +39,7 @@ statusForm.addEventListener("submit", async function (event) {
     try {
 
         const response = await fetch(
-            `http://localhost:8080/api/appointments/status/${appointmentId}`
+            "https://aura-salon-production.up.railway.app/api/appointments/status/${appointmentId}",
         );
 
 

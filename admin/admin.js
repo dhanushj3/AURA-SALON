@@ -1,5 +1,5 @@
 const API_URL =
-    "http://localhost:8080/api/appointments";
+    "https://aura-salon-production.up.railway.app/api/appointments";
 
 
 /* ================================

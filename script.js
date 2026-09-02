@@ -37,7 +37,7 @@ form.addEventListener("submit", async function (event) {
 
         // Send data to Spring Boot backend
         const response = await fetch(
-            "http://localhost:8080/api/appointments",
+            "http://aura-salon-production.up.railway.app",
             {
                 method: "POST",
 
