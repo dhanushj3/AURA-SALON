@@ -1,0 +1,507 @@
+/* ---------- Basic Reset ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ---------- Body ---------- */
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background: #faf6f3;
+}
+
+
+/* ---------- Header ---------- */
+
+.site-header {
+    background: white;
+
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+
+.navbar {
+    height: 75px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 0 8%;
+}
+
+
+.logo {
+    color: #2c2523;
+
+    text-decoration: none;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+}
+
+
+.back-link {
+    color: #777;
+
+    text-decoration: none;
+
+    font-size: 14px;
+}
+
+
+.back-link:hover {
+    color: #a56b65;
+}
+
+
+/* ---------- Status Section ---------- */
+
+.status-section {
+    min-height: calc(100vh - 75px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 60px 20px;
+}
+
+
+/* ---------- Card ---------- */
+
+.status-card {
+    width: 100%;
+
+    max-width: 600px;
+
+    background: white;
+
+    padding: 50px 45px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.08);
+
+    border: 1px solid #eee;
+}
+
+
+/* ---------- Heading ---------- */
+
+.section-label {
+    color: #a56b65;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 12px;
+}
+
+
+.status-card h1 {
+    font-size: 36px;
+
+    margin-bottom: 12px;
+}
+
+
+.description {
+    color: #777;
+
+    margin-bottom: 30px;
+
+    line-height: 1.7;
+}
+
+
+/* ---------- Form ---------- */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: bold;
+
+    font-size: 14px;
+}
+
+
+.form-group input {
+    width: 100%;
+
+    padding: 14px;
+
+    border: 1px solid #ddd;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+
+.form-group input:focus {
+    border-color: #a56b65;
+}
+
+
+/* ---------- Button ---------- */
+
+.status-button {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    background: #a56b65;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+
+.status-button:hover {
+    background: #824f4a;
+}
+
+
+/* ---------- Message ---------- */
+
+#status-message {
+    text-align: center;
+
+    margin-top: 20px;
+
+    color: #a56b65;
+
+    min-height: 20px;
+}
+
+
+/* ---------- Appointment Result ---------- */
+
+.appointment-result {
+    margin-top: 30px;
+
+    padding: 25px;
+
+    background: #faf6f3;
+
+    border-left: 4px solid #a56b65;
+
+    display: none;
+}
+
+
+.appointment-result h2 {
+    font-size: 22px;
+
+    margin-bottom: 20px;
+}
+
+
+.detail {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 9px 0;
+
+    border-bottom: 1px solid #eee;
+}
+
+
+.detail:last-child {
+    border-bottom: none;
+}
+
+
+.detail-label {
+    font-weight: bold;
+}
+
+
+.detail-value {
+    text-align: right;
+
+    color: #666;
+}
+
+
+/* ---------- Status ---------- */
+
+.status-value {
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+
+.status-pending {
+    color: #a0782f;
+}
+
+
+.status-approved {
+    color: #4f8060;
+}
+
+
+.status-rejected {
+    color: #9a5147;
+}
+
+
+/* ---------- Customer Message ---------- */
+
+.customer-message {
+    margin-top: 20px;
+
+    padding: 15px;
+
+    background: white;
+
+    line-height: 1.6;
+
+    color: #555;
+}
+
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+    background: #2c2523;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 30px 20px;
+}
+
+
+.site-footer h3 {
+    letter-spacing: 3px;
+
+    margin-bottom: 8px;
+}
+
+
+.site-footer p {
+    color: #ccc;
+
+    margin: 5px 0;
+}
+
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .status-card {
+        padding: 35px 25px;
+    }
+
+    .status-card h1 {
+        font-size: 28px;
+    }
+
+    .detail {
+        flex-direction: column;
+
+        gap: 4px;
+    }
+
+    .detail-value {
+        text-align: left;
+    }
+}
+
+/* ================================
+   APPOINTMENT STATUS RESULT
+================================ */
+
+#status-message {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+/* Loading message */
+
+.loading-message {
+    color: #8a625d;
+}
+
+
+/* Success message */
+
+.success-message {
+    color: #5d7a61;
+}
+
+
+/* Error message */
+
+.error-message {
+    color: #a04f4f;
+}
+
+
+/* Result card */
+
+.status-result-card {
+    max-width: 600px;
+    margin: 25px auto 0;
+    padding: 28px;
+    background: rgba(255, 250, 247, 0.96);
+    border: 1px solid rgba(165, 107, 101, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(70, 45, 40, 0.12);
+}
+
+
+/* Result heading */
+
+.status-result-card h3 {
+    margin: 0 0 22px;
+    text-align: center;
+    color: #5a403b;
+    font-size: 22px;
+}
+
+
+/* Individual details */
+
+.status-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(165, 107, 101, 0.15);
+    gap: 20px;
+}
+
+
+.status-detail span {
+    color: #806b66;
+    font-size: 14px;
+}
+
+
+.status-detail strong {
+    color: #4e3935;
+    font-size: 14px;
+    text-align: right;
+}
+
+
+/* Appointment status */
+
+.appointment-status {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px !important;
+    letter-spacing: 0.5px;
+}
+
+
+.appointment-status.pending {
+    background: #f4e6d1;
+    color: #9a6b32 !important;
+}
+
+
+.appointment-status.approved {
+    background: #dcebdd;
+    color: #4f7554 !important;
+}
+
+
+.appointment-status.rejected {
+    background: #f1dada;
+    color: #9b4f4f !important;
+}
+
+
+/* Message box */
+
+.status-message-box {
+    margin-top: 22px;
+    padding: 17px;
+    background: rgba(165, 107, 101, 0.08);
+    border-left: 4px solid #a56b65;
+    border-radius: 8px;
+}
+
+
+.status-message-box strong {
+    display: block;
+    margin-bottom: 7px;
+    color: #5a403b;
+}
+
+
+.status-message-box p {
+    margin: 0;
+    color: #725f5a;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .status-result-card {
+        padding: 20px;
+    }
+
+    .status-detail {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .status-detail strong {
+        text-align: left;
+    }
+}

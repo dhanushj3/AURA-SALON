@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Aura Salon - Appointment Status</title>
+
+    <link rel="stylesheet" href="status.css">
+
+</head>
+
+<body>
+
+    <!-- ---------- Header ---------- -->
+
+    <header class="site-header">
+
+        <div class="navbar">
+
+            <a href="index.html" class="logo">
+                AURA SALON
+            </a>
+
+            <a href="index.html" class="back-link">
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- ---------- Status Section ---------- -->
+
+    <main class="status-section">
+
+        <div class="status-card">
+
+            <p class="section-label">
+                AURA SALON
+            </p>
+
+            <h1>
+                Check Appointment Status
+            </h1>
+
+            <p class="description">
+                Enter your Appointment ID to check
+                your appointment details and status.
+            </p>
+
+
+            <!-- ---------- Search Form ---------- -->
+
+            <form id="status-form">
+
+                <div class="form-group">
+
+                    <label for="appointment-id">
+                        Appointment ID
+                    </label>
+
+                    <input
+                        type="number"
+                        id="appointment-id"
+                        placeholder="Enter your Appointment ID"
+                        min="1"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="status-button">
+
+                    Check Status
+
+                </button>
+
+            </form>
+
+
+            <!-- ---------- Message ---------- -->
+
+            <p id="status-message"></p>
+
+
+            <!-- ---------- Appointment Result ---------- -->
+
+            <div
+                id="appointment-result"
+                class="appointment-result">
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ---------- Footer ---------- -->
+
+    <footer class="site-footer">
+
+        <h3>AURA SALON</h3>
+
+        <p>
+            Where Beauty Meets Confidence
+        </p>
+
+        <p>
+            © 2026 Aura Salon. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="status.js"></script>
+
+</body>
+
+</html>
