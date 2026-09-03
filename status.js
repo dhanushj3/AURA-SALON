@@ -17,35 +17,44 @@ statusForm.addEventListener("submit", async function (event) {
     const appointmentId =
         appointmentIdInput.value.trim();
 
+
+    // Check whether Appointment ID is entered
     if (!appointmentId) {
+
         statusMessage.textContent =
             "Please enter your Appointment ID.";
 
-        statusMessage.className = "error-message";
+        statusMessage.className =
+            "error-message";
 
         statusResult.innerHTML = "";
 
         return;
     }
 
+
+    // Show loading message
     statusMessage.textContent =
         "Checking your appointment...";
 
-    statusMessage.className = "loading-message";
+    statusMessage.className =
+        "loading-message";
 
     statusResult.innerHTML = "";
 
 
     try {
 
+        // Connect to Railway backend
         const response = await fetch(
-            "https://aura-salon-production.up.railway.app/api/appointments/status/${appointmentId}",
+            `https://aura-salon-production.up.railway.app/api/appointments/status/${appointmentId}`
         );
 
 
         const result = await response.json();
 
 
+        // Appointment found
         if (response.ok) {
 
             statusMessage.textContent =
@@ -88,21 +97,30 @@ statusForm.addEventListener("submit", async function (event) {
 
                     <div class="status-detail">
                         <span>Status</span>
+
                         <strong class="appointment-status ${result.status.toLowerCase()}">
                             ${result.status}
                         </strong>
+
                     </div>
 
                     <div class="status-message-box">
+
                         <strong>Message</strong>
+
                         <p>${result.message}</p>
+
                     </div>
 
                 </div>
 
             `;
 
-        } else {
+        }
+
+
+        // Appointment not found
+        else {
 
             statusMessage.textContent =
                 result.message ||
