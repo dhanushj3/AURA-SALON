@@ -13,12 +13,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@CrossOrigin(origins = {
+        "http://localhost:5500",
+        "http://127.0.0.1:5500"
+})
 @RestController
 @RequestMapping("/api/appointments")
 public class AppointmentController {
 
     private final AppointmentRepository appointmentRepository;
-
 
     public AppointmentController(
             AppointmentRepository appointmentRepository) {
@@ -67,7 +70,6 @@ public class AppointmentController {
         Optional<Appointment> appointment =
                 appointmentRepository.findById(id);
 
-
         // Appointment ID does not exist
         if (appointment.isEmpty()) {
 
@@ -84,15 +86,12 @@ public class AppointmentController {
                     .body(error);
         }
 
-
         Appointment existingAppointment =
                 appointment.get();
-
 
         // Create customer response
         Map<String, Object> response =
                 new HashMap<>();
-
 
         response.put(
                 "id",
@@ -129,7 +128,6 @@ public class AppointmentController {
                 existingAppointment.getMessage()
         );
 
-
         return ResponseEntity.ok(response);
     }
 
@@ -144,7 +142,6 @@ public class AppointmentController {
 
         Optional<Appointment> appointment =
                 appointmentRepository.findById(id);
-
 
         // Appointment ID does not exist
         if (appointment.isEmpty()) {
@@ -162,10 +159,8 @@ public class AppointmentController {
                     .body(error);
         }
 
-
         Appointment existingAppointment =
                 appointment.get();
-
 
         // Check whether the requested slot
         // is already approved for another appointment
@@ -177,7 +172,6 @@ public class AppointmentController {
                                 "APPROVED",
                                 existingAppointment.getId()
                         );
-
 
         // -------------------------------------------------
         // SLOT ALREADY BOOKED
@@ -193,15 +187,12 @@ public class AppointmentController {
                             + "Please choose another date or time."
             );
 
-
             appointmentRepository.save(
                     existingAppointment
             );
 
-
             Map<String, String> response =
                     new HashMap<>();
-
 
             response.put(
                     "message",
@@ -213,12 +204,10 @@ public class AppointmentController {
                     "REJECTED"
             );
 
-
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body(response);
         }
-
 
         // -------------------------------------------------
         // APPOINTMENT APPROVED
@@ -230,12 +219,10 @@ public class AppointmentController {
                 "Your appointment has been approved successfully."
         );
 
-
         Appointment savedAppointment =
                 appointmentRepository.save(
                         existingAppointment
                 );
-
 
         return ResponseEntity.ok(
                 savedAppointment
@@ -254,7 +241,6 @@ public class AppointmentController {
         Optional<Appointment> appointment =
                 appointmentRepository.findById(id);
 
-
         // Appointment ID does not exist
         if (appointment.isEmpty()) {
 
@@ -271,10 +257,8 @@ public class AppointmentController {
                     .body(error);
         }
 
-
         Appointment existingAppointment =
                 appointment.get();
-
 
         existingAppointment.setStatus("REJECTED");
 
@@ -284,12 +268,10 @@ public class AppointmentController {
                         + "date or time."
         );
 
-
         Appointment savedAppointment =
                 appointmentRepository.save(
                         existingAppointment
                 );
-
 
         return ResponseEntity.ok(
                 savedAppointment
