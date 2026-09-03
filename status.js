@@ -1,3 +1,20 @@
+/* ================================
+   API URL
+   LOCAL  → localhost:8080
+   ONLINE → Railway
+================================ */
+
+const API_URL =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+        ? "http://localhost:8080/api/appointments"
+        : "https://aura-salon-production.up.railway.app/api/appointments";
+
+
+/* ================================
+   HTML ELEMENTS
+================================ */
+
 const statusForm =
     document.getElementById("status-form");
 
@@ -11,17 +28,25 @@ const statusResult =
     document.getElementById("status-result");
 
 
+/* ================================
+   CHECK APPOINTMENT STATUS
+================================ */
+
 statusForm.addEventListener(
     "submit",
     async function (event) {
 
         event.preventDefault();
 
+
         const appointmentId =
             appointmentIdInput.value.trim();
 
 
-        // Check whether Appointment ID is entered
+        /* ================================
+           CHECK APPOINTMENT ID
+        ================================= */
+
         if (!appointmentId) {
 
             statusMessage.textContent =
@@ -36,7 +61,10 @@ statusForm.addEventListener(
         }
 
 
-        // Show loading message
+        /* ================================
+           LOADING
+        ================================= */
+
         statusMessage.textContent =
             "Checking your appointment...";
 
@@ -46,12 +74,15 @@ statusForm.addEventListener(
         statusResult.innerHTML = "";
 
 
+        /* ================================
+           CONNECT TO SPRING BOOT
+        ================================= */
+
         try {
 
-            // Connect to local Spring Boot backend
             const response =
                 await fetch(
-                    `http://localhost:8080/api/appointments/status/${appointmentId}`
+                    `${API_URL}/status/${appointmentId}`
                 );
 
 
@@ -59,7 +90,10 @@ statusForm.addEventListener(
                 await response.json();
 
 
-            // Appointment found
+            /* ================================
+               APPOINTMENT FOUND
+            ================================= */
+
             if (response.ok) {
 
                 statusMessage.textContent =
@@ -75,45 +109,96 @@ statusForm.addEventListener(
 
                         <h3>Appointment Details</h3>
 
+
                         <div class="status-detail">
-                            <span>Appointment ID</span>
-                            <strong>${result.id}</strong>
+
+                            <span>
+                                Appointment ID
+                            </span>
+
+                            <strong>
+                                ${result.id}
+                            </strong>
+
                         </div>
 
+
                         <div class="status-detail">
-                            <span>Customer Name</span>
-                            <strong>${result.customerName}</strong>
+
+                            <span>
+                                Customer Name
+                            </span>
+
+                            <strong>
+                                ${result.customerName}
+                            </strong>
+
                         </div>
 
+
                         <div class="status-detail">
-                            <span>Service</span>
-                            <strong>${result.service}</strong>
+
+                            <span>
+                                Service
+                            </span>
+
+                            <strong>
+                                ${result.service}
+                            </strong>
+
                         </div>
 
+
                         <div class="status-detail">
-                            <span>Date</span>
-                            <strong>${result.appointmentDate}</strong>
+
+                            <span>
+                                Date
+                            </span>
+
+                            <strong>
+                                ${result.appointmentDate}
+                            </strong>
+
                         </div>
 
+
                         <div class="status-detail">
-                            <span>Time</span>
-                            <strong>${result.appointmentTime}</strong>
+
+                            <span>
+                                Time
+                            </span>
+
+                            <strong>
+                                ${result.appointmentTime}
+                            </strong>
+
                         </div>
 
-                        <div class="status-detail">
-                            <span>Status</span>
 
-                            <strong class="appointment-status ${result.status.toLowerCase()}">
+                        <div class="status-detail">
+
+                            <span>
+                                Status
+                            </span>
+
+                            <strong
+                                class="appointment-status ${result.status.toLowerCase()}"
+                            >
                                 ${result.status}
                             </strong>
 
                         </div>
 
+
                         <div class="status-message-box">
 
-                            <strong>Message</strong>
+                            <strong>
+                                Message
+                            </strong>
 
-                            <p>${result.message}</p>
+                            <p>
+                                ${result.message || ""}
+                            </p>
 
                         </div>
 
@@ -124,7 +209,10 @@ statusForm.addEventListener(
             }
 
 
-            // Appointment not found
+            /* ================================
+               APPOINTMENT NOT FOUND
+            ================================= */
+
             else {
 
                 statusMessage.textContent =
@@ -137,8 +225,14 @@ statusForm.addEventListener(
                 statusResult.innerHTML = "";
             }
 
+        }
 
-        } catch (error) {
+
+        /* ================================
+           CONNECTION ERROR
+        ================================= */
+
+        catch (error) {
 
             console.error(
                 "Status check error:",
