@@ -1,5 +1,5 @@
 const API_URL =
-    "https://aura-salon-production.up.railway.app/api/appointments";
+    "http://localhost:8080/api/appointments";
 
 
 /* ================================
@@ -233,9 +233,11 @@ function displayAppointments(
 
                         :
 
-                        `<span class="completed">
-                            Completed
-                        </span>`
+                        `
+                            <span class="completed">
+                                Completed
+                            </span>
+                        `
                     }
 
                 </td>
@@ -243,6 +245,7 @@ function displayAppointments(
 
 
             tableBody.appendChild(row);
+
         }
     );
 }
@@ -283,7 +286,7 @@ function updateStatistics(
 
 
 /* ================================
-   APPROVE
+   APPROVE APPOINTMENT
 ================================ */
 
 async function approveAppointment(id) {
@@ -316,15 +319,21 @@ async function approveAppointment(id) {
 
             loadAppointments();
 
-        } else if (
+        }
+
+        else if (
             response.status === 409
         ) {
 
-            alert(result.message);
+            alert(
+                result.message
+            );
 
             loadAppointments();
 
-        } else {
+        }
+
+        else {
 
             alert(
                 result.message ||
@@ -345,7 +354,7 @@ async function approveAppointment(id) {
 
 
 /* ================================
-   REJECT
+   REJECT APPOINTMENT
 ================================ */
 
 async function rejectAppointment(id) {
@@ -424,10 +433,13 @@ if (logoutButton) {
 }
 
 
-refreshButton.addEventListener(
-    "click",
-    loadAppointments
-);
+if (refreshButton) {
+
+    refreshButton.addEventListener(
+        "click",
+        loadAppointments
+    );
+}
 
 
 /* ================================
