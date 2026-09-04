@@ -1,10 +1,10 @@
 /* ================================
-   API URL
+   STATUS API URL
    LOCAL  → localhost:8080
    ONLINE → Railway
 ================================ */
 
-const API_URL =
+const STATUS_API_URL =
     window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1"
         ? "http://localhost:8080/api/appointments"
@@ -29,195 +29,244 @@ const statusResult =
 
 
 /* ================================
-   CHECK APPOINTMENT STATUS
+   CHECK STATUS FORM
 ================================ */
 
-statusForm.addEventListener(
-    "submit",
-    async function (event) {
+if (statusForm) {
 
-        event.preventDefault();
+    statusForm.addEventListener(
+        "submit",
+        async function (event) {
 
-
-        const appointmentId =
-            appointmentIdInput.value.trim();
-
-
-        /* ================================
-           CHECK APPOINTMENT ID
-        ================================= */
-
-        if (!appointmentId) {
-
-            statusMessage.textContent =
-                "Please enter your Appointment ID.";
-
-            statusMessage.className =
-                "error-message";
-
-            statusResult.innerHTML = "";
-
-            return;
-        }
-
-
-        /* ================================
-           LOADING
-        ================================= */
-
-        statusMessage.textContent =
-            "Checking your appointment...";
-
-        statusMessage.className =
-            "loading-message";
-
-        statusResult.innerHTML = "";
-
-
-        /* ================================
-           CONNECT TO SPRING BOOT
-        ================================= */
-
-        try {
-
-            const response =
-                await fetch(
-                    `${API_URL}/status/${appointmentId}`
-                );
-
-
-            const result =
-                await response.json();
+            event.preventDefault();
+            event.stopPropagation();
 
 
             /* ================================
-               APPOINTMENT FOUND
+               GET APPOINTMENT ID
             ================================= */
 
-            if (response.ok) {
+            const appointmentId =
+                appointmentIdInput.value.trim();
+
+
+            /* ================================
+               VALIDATE ID
+            ================================= */
+
+            if (!appointmentId) {
 
                 statusMessage.textContent =
-                    "Appointment details found.";
+                    "Please enter your Appointment ID.";
 
                 statusMessage.className =
-                    "success-message";
+                    "error-message";
+
+                statusResult.innerHTML = "";
+
+                return;
+            }
 
 
-                statusResult.innerHTML = `
+            /* ================================
+               LOADING
+            ================================= */
 
-                    <div class="status-result-card">
+            statusMessage.textContent =
+                "Checking your appointment...";
 
-                        <h3>Appointment Details</h3>
+            statusMessage.className =
+                "loading-message";
+
+            statusResult.innerHTML = "";
 
 
-                        <div class="status-detail">
+            /* ================================
+               CALL SPRING BOOT
+            ================================= */
 
-                            <span>
-                                Appointment ID
-                            </span>
+            try {
 
-                            <strong>
-                                ${result.id}
-                            </strong>
+                const response =
+                    await fetch(
+                        `${STATUS_API_URL}/status/${appointmentId}`,
+                        {
+                            method: "GET",
+                            headers: {
+                                "Accept": "application/json"
+                            }
+                        }
+                    );
+
+
+                /* ================================
+                   READ RESPONSE
+                ================================= */
+
+                const result =
+                    await response.json();
+
+
+                /* ================================
+                   SUCCESS
+                ================================= */
+
+                if (response.ok) {
+
+                    statusMessage.textContent =
+                        "Appointment details found.";
+
+                    statusMessage.className =
+                        "success-message";
+
+
+                    const appointmentStatus =
+                        result.status
+                            ? result.status.toLowerCase()
+                            : "";
+
+
+                    statusResult.innerHTML = `
+
+                        <div class="status-result-card">
+
+                            <h3>
+                                Appointment Details
+                            </h3>
+
+
+                            <div class="status-detail">
+
+                                <span>
+                                    Appointment ID
+                                </span>
+
+                                <strong>
+                                    ${result.id || ""}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="status-detail">
+
+                                <span>
+                                    Customer Name
+                                </span>
+
+                                <strong>
+                                    ${result.customerName || ""}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="status-detail">
+
+                                <span>
+                                    Service
+                                </span>
+
+                                <strong>
+                                    ${result.service || ""}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="status-detail">
+
+                                <span>
+                                    Date
+                                </span>
+
+                                <strong>
+                                    ${result.appointmentDate || ""}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="status-detail">
+
+                                <span>
+                                    Time
+                                </span>
+
+                                <strong>
+                                    ${result.appointmentTime || ""}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="status-detail">
+
+                                <span>
+                                    Status
+                                </span>
+
+                                <strong
+                                    class="appointment-status ${appointmentStatus}"
+                                >
+                                    ${result.status || ""}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="status-message-box">
+
+                                <strong>
+                                    Message
+                                </strong>
+
+                                <p>
+                                    ${result.message || ""}
+                                </p>
+
+                            </div>
 
                         </div>
 
+                    `;
 
-                        <div class="status-detail">
-
-                            <span>
-                                Customer Name
-                            </span>
-
-                            <strong>
-                                ${result.customerName}
-                            </strong>
-
-                        </div>
+                }
 
 
-                        <div class="status-detail">
+                /* ================================
+                   APPOINTMENT NOT FOUND
+                ================================= */
 
-                            <span>
-                                Service
-                            </span>
+                else {
 
-                            <strong>
-                                ${result.service}
-                            </strong>
+                    statusMessage.textContent =
+                        result.message ||
+                        "Appointment not found.";
 
-                        </div>
+                    statusMessage.className =
+                        "error-message";
 
+                    statusResult.innerHTML = "";
+                }
 
-                        <div class="status-detail">
-
-                            <span>
-                                Date
-                            </span>
-
-                            <strong>
-                                ${result.appointmentDate}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="status-detail">
-
-                            <span>
-                                Time
-                            </span>
-
-                            <strong>
-                                ${result.appointmentTime}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="status-detail">
-
-                            <span>
-                                Status
-                            </span>
-
-                            <strong
-                                class="appointment-status ${result.status.toLowerCase()}"
-                            >
-                                ${result.status}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="status-message-box">
-
-                            <strong>
-                                Message
-                            </strong>
-
-                            <p>
-                                ${result.message || ""}
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                `;
 
             }
 
 
             /* ================================
-               APPOINTMENT NOT FOUND
+               CONNECTION ERROR
             ================================= */
 
-            else {
+            catch (error) {
+
+                console.error(
+                    "Status check error:",
+                    error
+                );
 
                 statusMessage.textContent =
-                    result.message ||
-                    "Appointment not found.";
+                    "Unable to connect to the Aura Salon server.";
 
                 statusMessage.className =
                     "error-message";
@@ -226,27 +275,5 @@ statusForm.addEventListener(
             }
 
         }
-
-
-        /* ================================
-           CONNECTION ERROR
-        ================================= */
-
-        catch (error) {
-
-            console.error(
-                "Status check error:",
-                error
-            );
-
-            statusMessage.textContent =
-                "Unable to connect to the Aura Salon server.";
-
-            statusMessage.className =
-                "error-message";
-
-            statusResult.innerHTML = "";
-        }
-
-    }
-);
+    );
+}
