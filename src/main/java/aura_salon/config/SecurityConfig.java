@@ -52,20 +52,24 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
+                        // Allow CORS preflight requests
                         .requestMatchers(
                                 HttpMethod.OPTIONS, "/**"
                         ).permitAll()
 
+                        // CUSTOMER - CREATE APPOINTMENT
                         .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/appointments"
                         ).permitAll()
 
+                        // CUSTOMER - CHECK STATUS
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/appointments/status/**"
                         ).permitAll()
 
+                        // ADMIN - ALL OTHER APPOINTMENT APIs
                         .requestMatchers(
                                 "/api/appointments/**"
                         ).hasRole("ADMIN")
@@ -84,8 +88,13 @@ public class SecurityConfig {
         CorsConfiguration configuration =
                 new CorsConfiguration();
 
+        // LOCAL + PRODUCTION
         configuration.setAllowedOrigins(
-                List.of("https://aura-saloon.netlify.app")
+                List.of(
+                        "http://localhost:5500",
+                        "http://127.0.0.1:5500",
+                        "https://aura-saloon.netlify.app"
+                )
         );
 
         configuration.setAllowedMethods(
